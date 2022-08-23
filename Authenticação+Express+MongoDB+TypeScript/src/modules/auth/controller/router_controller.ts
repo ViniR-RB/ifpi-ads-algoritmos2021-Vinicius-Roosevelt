@@ -24,9 +24,9 @@ export  class AuthController{
 
         const {name,email,password} = req.body
         const hash = await bcrypt.hash(password,saltRound)
-        console.log(hash);
         
-        const user: User = await {name: name,email: email,password: hash}
+        
+        const user: User = { name: name, email: email, password: hash }
         
         const foundEmail = await this.users.findOne<User>({email})
 
@@ -48,7 +48,7 @@ export  class AuthController{
             const foundUser = await this.users.findOne<User>({
                 email: email
             })
-            const checkPassword = await bcrypt.compare(password,foundUser!.password)
+            const checkPassword = await bcrypt.compare(hash,foundUser!.password)
          
             if(!foundUser && !checkPassword){
                 return res.status(401).json({error: "Usuario e/ou senha incorretos"})
