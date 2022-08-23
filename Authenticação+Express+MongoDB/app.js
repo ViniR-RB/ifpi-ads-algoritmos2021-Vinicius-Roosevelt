@@ -141,14 +141,8 @@ app.post("/auth/login", async (req, res) => {
 
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASS;
+const port = 3000
 
-mongoose
-  .connect(
-    `mongodb+srv://${dbUser}:${dbPassword}@cluster0.mom2gag.mongodb.net/?retryWrites=true&w=majority`
-  )
-  .then(() => {
-    console.log("Conectou ao banco! 🚀");
-    app.listen(3000);
-  })
-  .catch((err) => console.log(err)); 
+app.listen(port, () => console.log("Conectou ao banco!🚀"))
+
 
