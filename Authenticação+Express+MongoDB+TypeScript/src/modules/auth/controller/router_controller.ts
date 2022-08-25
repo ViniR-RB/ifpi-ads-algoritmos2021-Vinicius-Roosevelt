@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import {MongoClient } from "mongodb";
 import bcrypt from 'bcrypt'
 import User from '../model/User'
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
+
 
 const saltRound =  10
 
@@ -53,7 +56,12 @@ export  class AuthController{
             if(!foundUser && !checkPassword){
                 return res.status(401).json({error: "Usuario e/ou senha incorretos"})
             }
-            return res.json({msg: "Logado com Sucesso"})
+            try{
+                const secret = process.env.SECRET
+                const token = jwt.sign({id: foundUser?.id},secret!)
+            }catch(err){
+                res.status(500).json({msg: err})
+            }
         }
     }
 
