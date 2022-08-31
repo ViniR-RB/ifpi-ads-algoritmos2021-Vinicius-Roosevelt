@@ -15,7 +15,7 @@ export  class AuthController{
     private users
 
     constructor(){
-        const uri = 'mongodb://Vinicius:123@localhost:27017/?authMechanism=DEFAULT'
+        const uri = 'mongodb://0.0.0.0:2717/?authMechanism=DEFAULT'
         this.client = new MongoClient(uri)
         this.db = this.client.db('socialapp')
         this.users = this.db.collection<User>('users')
@@ -58,8 +58,10 @@ export  class AuthController{
             }
             try{
                 const secret = process.env.SECRET
-                const token = jwt.sign({id: foundUser?.id},secret!)
+                const token = jwt.sign({id: foundUser?.id},secret!,{expiresIn: "1m"})
+                res.status(400).json({refreshtoken: token, auth: true})
             }catch(err){
+                console.log(err);
                 res.status(500).json({msg: err})
             }
         }

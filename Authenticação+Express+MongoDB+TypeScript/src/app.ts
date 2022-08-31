@@ -1,5 +1,5 @@
 import express from 'express'
-import Authrouter from './modules/routes/routes'
+import Router from './modules/routes/routes'
 import {LogMiddleware} from './middlewares/middlewares_log'
 
 const app = express()
@@ -13,7 +13,8 @@ app.get('/', (req,res)=> {
 
 
 
-app.use(Authrouter)
+app.use(Router)
+
 
 const port = 3000
  
