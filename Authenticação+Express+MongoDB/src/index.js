@@ -12,10 +12,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.get('/', (req,res) => {
     res.send({msg: "Bem vindo a nossa Api"})
 })
-require('./controllers/auth_controller')(app)
-require('./controllers/project_controller')(app)
+require('./app/controllers/index')(app)
 
 const port = 3000
+
+
+
 app.listen(port,()  =>{
     console.log(`Sever Rodando em http://localhost:${port}`)
 })
