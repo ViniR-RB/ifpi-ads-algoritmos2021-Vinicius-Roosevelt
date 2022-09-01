@@ -113,6 +113,7 @@ router.post('/reset_password', async (req,res) => {
             res.status(400).json({err: "Token Expired"})
         }
         user.password = password;
+        
         await user.save();
 
         res.send();
