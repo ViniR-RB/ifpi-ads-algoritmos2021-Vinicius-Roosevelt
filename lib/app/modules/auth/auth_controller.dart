@@ -5,13 +5,14 @@ class AuthController {
 
   AuthController({required this.repository});
 
-  login(name, email, password) async {
-    final exists = await repository.login(name, email, password);
+  login(email, password) async {
+    final exists = await repository.login(email, password);
 
-    if (exists == 409) {
-      return true;
-    } else {
+    if (exists == 400) {
       return false;
+    } else {
+      return true;
     }
+    
   }
 }

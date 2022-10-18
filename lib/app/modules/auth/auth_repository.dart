@@ -1,16 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app/app/core/models/user.dart';
 import 'package:dio/dio.dart';
 
 class AuthRepository {
   Dio repository = Dio();
-  var url = 'http://172.17.0.1:3000/users/createUser';
-  login(name, email, password) async {
+  var url = 'http://172.17.0.1:3000/auth/login';
+  login(email, password) async {
     try {
       final Map<String, dynamic> login = {
-        'name': name,
         'email': email,
         'password': password,
       };
@@ -19,9 +17,11 @@ class AuthRepository {
           options: Options(headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
           }));
-      return response.statusCode;
+      print('Response: $response');
+      return response;
     } catch (e) {
-      return 409;
+      print('Error: $e');
+      return 400;
     }
   }
 }

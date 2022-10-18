@@ -5,10 +5,11 @@ import 'package:dio/dio.dart';
 
 class SignInRepository {
   Dio repository = Dio();
-  var url = 'http://172.17.0.1:3000/auth/login';
-  signIn(email, password) async {
+  var url = 'http://172.17.0.1:3000/users/createUser';
+  signIn(name, email, password) async {
     try {
       final Map<String, dynamic> login = {
+        'name': name,
         'email': email,
         'password': password,
       };
@@ -17,9 +18,11 @@ class SignInRepository {
           options: Options(headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
           }));
-      return response.statusCode;
+      print('Response: $response');
+      return response;
     } catch (e) {
-      print(e);
+      print(409);
+      return 409;
     }
   }
 }

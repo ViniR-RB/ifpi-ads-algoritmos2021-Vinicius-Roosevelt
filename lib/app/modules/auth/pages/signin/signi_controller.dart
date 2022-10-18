@@ -1,4 +1,3 @@
-import 'package:app/app/modules/auth/auth_repository.dart';
 import 'package:app/app/modules/auth/pages/signin/signi_repository.dart';
 
 class SignInController {
@@ -7,6 +6,11 @@ class SignInController {
   SignInController({required this.repository});
 
   signIn(name, email, password) async {
-    final exists = await repository.signIn(email, password);
+    final exists = await repository.signIn(name, email, password);
+    if (exists == 409) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

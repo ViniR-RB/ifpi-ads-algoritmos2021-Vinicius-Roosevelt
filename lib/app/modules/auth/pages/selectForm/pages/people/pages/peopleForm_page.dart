@@ -61,7 +61,8 @@ class _FormPeoplePageState extends State<FormPeoplePage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buttonFinish(size, () {}, 'Finalizar'),
+            _buttonFinish(
+                size, () => Modular.to.navigate('/home/'), 'Finalizar'),
             SizedBox(
               width: 20,
             ),

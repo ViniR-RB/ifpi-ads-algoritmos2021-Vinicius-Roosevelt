@@ -16,6 +16,7 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _passwordcontroller = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool isnew = true;
 
   final SignInController _controller = Modular.get();
 
@@ -64,7 +65,9 @@ class _SignInPageState extends State<SignInPage> {
       } else {
         _controller.signIn(
             _nameController, _emailcontroller.text, _passwordcontroller.text);
-        Modular.to.navigate('/selectform');
+        isnew
+            ? Modular.to.navigate('/auth/selectform')
+            : Modular.to.navigate('/home/');
       }
     }
   }
@@ -136,7 +139,7 @@ class _SignInPageState extends State<SignInPage> {
   _forgotPassword(size) {
     return GestureDetector(
       onTap: () {
-        Modular.to.navigate('/');
+        Modular.to.navigate('/auth');
       },
       child: Container(
         child: Row(
@@ -175,17 +178,18 @@ class _SignInPageState extends State<SignInPage> {
         controller: controller,
         keyboardType: textInputType,
         decoration: InputDecoration(
-            labelStyle: TextStyle(color: Colors.white),
-            label: Text(label),
-            hintText: hintText,
-            hintStyle: TextStyle(color: Colors.grey),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.white, width: 1),
-            )),
+          labelStyle: TextStyle(color: Colors.white),
+          label: Text(label),
+          hintText: hintText,
+          hintStyle: TextStyle(color: Colors.grey),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide(color: Colors.white, width: 1),
+          ),
+        ),
       ),
     );
   }

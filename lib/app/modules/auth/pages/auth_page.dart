@@ -14,6 +14,7 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
+  bool isnew = true;
 
   final _formKey = GlobalKey<FormState>();
   final AuthController _controller = Modular.get();
@@ -41,21 +42,23 @@ class _AuthPageState extends State<AuthPage> {
   void validatedForm() async {
     if (_formKey.currentState!.validate()) {
       final snackBar = SnackBar(
-        content: const Text('Email em uso'),
+        content: const Text('Usuario ou Senha Incorretos'),
         action: SnackBarAction(
           label: 'Continuar',
           onPressed: () {},
         ),
       );
       var exists = await _controller.login(
-          'Vinicius', _emailcontroller.text, _passwordcontroller.text);
+          _emailcontroller.text, _passwordcontroller.text);
 
-      if (exists == true) {
+      if (exists == false) {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else {
-        _controller.login(
-            'Viniuc', _emailcontroller.text, _passwordcontroller.text);
-        Modular.to.navigate('/selectform');
+        _controller.login(_emailcontroller.text, _passwordcontroller.text);
+        isnew = true;
+        isnew
+            ? Modular.to.navigate('/auth/selectform')
+            : Modular.to.navigate('/home/');
       }
     }
     //  Modular.to.navigate('/selectform');
@@ -132,7 +135,7 @@ class _AuthPageState extends State<AuthPage> {
           const SizedBox(height: 10),
           AuthButton(
             label: 'Cadastrar-se',
-            onpressed: () => {Modular.to.pushNamed('/sigIn/')},
+            onpressed: () => Modular.to.pushNamed('/auth/sigIn'),
           ),
         ],
       ),

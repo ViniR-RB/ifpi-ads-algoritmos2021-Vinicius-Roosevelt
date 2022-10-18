@@ -3,14 +3,25 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class SelectFormPage extends StatelessWidget {
+class SelectFormPage extends StatefulWidget {
   const SelectFormPage({Key? key}) : super(key: key);
 
+  @override
+  State<SelectFormPage> createState() => _SelectFormPageState();
+}
+
+class _SelectFormPageState extends State<SelectFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(249, 239, 66, 1),
-      body: Column(
+      body: _body(),
+    );
+  }
+
+  _body() {
+    return SingleChildScrollView(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
@@ -39,7 +50,7 @@ class SelectFormPage extends StatelessWidget {
                       IconButton(
                         iconSize: 100,
                         onPressed: () =>
-                            Modular.to.pushNamed('/selectform/people'),
+                            Modular.to.pushNamed('/auth/selectform/people'),
                         icon: Icon(Icons.people, color: Colors.black),
                       ),
                       Text(
@@ -61,7 +72,7 @@ class SelectFormPage extends StatelessWidget {
                         IconButton(
                           iconSize: 100,
                           onPressed: () =>
-                              Modular.to.pushNamed('/selectform/factory'),
+                              Modular.to.pushNamed('/auth/selectform/factory'),
                           icon: Icon(
                             Icons.factory,
                             color: Colors.black,
@@ -77,6 +88,37 @@ class SelectFormPage extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+  field(
+    size,
+    String? Function(String?)? validator,
+    controller,
+    label,
+    hintText,
+    textInputType,
+  ) {
+    return Container(
+      height: size.height / 14,
+      width: size.width / 1.2,
+      child: TextFormField(
+        validator: validator,
+        controller: controller,
+        keyboardType: textInputType,
+        decoration: InputDecoration(
+          labelStyle: TextStyle(color: Colors.white),
+          label: Text(label),
+          hintText: hintText,
+          hintStyle: TextStyle(color: Colors.grey),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide(color: Colors.white, width: 1),
+          ),
+        ),
       ),
     );
   }
