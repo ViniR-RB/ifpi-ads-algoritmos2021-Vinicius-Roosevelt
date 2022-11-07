@@ -66,7 +66,7 @@ class _SignInPageState extends State<SignInPage> {
         _controller.signIn(
             _nameController, _emailcontroller.text, _passwordcontroller.text);
         isnew
-            ? Modular.to.navigate('/auth/selectform')
+            ? Modular.to.navigate('/auth/selectform/')
             : Modular.to.navigate('/home/');
       }
     }

@@ -1,18 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:rx_notifier/rx_notifier.dart';
 
 import '../widgets/card.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePrestadorPage extends StatefulWidget {
+  const HomePrestadorPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePrestadorPage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePrestadorPage> {
+  final _selectedIndex = RxNotifier<int>(0);
+
+  void _onItemTapped(int index) {
+    if (index == 1) {
+      Modular.to.pushNamed('/home/prestador/perfil');
+    }
+    _selectedIndex.value = index;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            label: 'Home',
+            icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+        ],
+        currentIndex: _selectedIndex.value,
+        selectedItemColor: Color.fromRGBO(249, 238, 47, 1),
+        onTap: _onItemTapped,
+      ),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(249, 238, 47, 1),
         leading: Image.asset(

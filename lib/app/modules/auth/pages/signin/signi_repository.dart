@@ -21,7 +21,6 @@ class SignInRepository {
       print('Response: $response');
       return response;
     } catch (e) {
-      print(409);
       return 409;
     }
   }

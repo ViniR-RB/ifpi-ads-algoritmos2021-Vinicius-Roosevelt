@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../core/db/db.dart';
+import '../../../core/models/user.dart';
+
 class SplashPage extends StatefulWidget {
   SplashPage({super.key});
 
@@ -10,11 +13,29 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   bool teste = true;
-  var duration = Future.delayed(
-      const Duration(seconds: 5),
-      () => {
-            Modular.to.navigate('/auth/'),
-          });
+  final DatabaseConnect db = DatabaseConnect();
+  validarToken() async {
+    final List<User> userList = await db.getUser();
+    if (userList.isEmpty) {
+      final Future<Set<void>> duration = Future.delayed(
+          const Duration(seconds: 5),
+          () => {
+                Modular.to.navigate('/auth/'),
+              });
+    } else {
+      var duration = Future.delayed(
+          const Duration(seconds: 5),
+          () => {
+                Modular.to.navigate('/home/prestador/'),
+              });
+    }
+  }
+
+  @override
+  void initState() {
+    validarToken();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

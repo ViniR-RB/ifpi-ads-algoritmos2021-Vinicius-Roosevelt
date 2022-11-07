@@ -27,14 +27,15 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  
   dio: ^4.0.6
   flutter:
     sdk: flutter
   flutter_modular: ^5.0.3
   http: ^0.13.5
+  image_picker: ^0.8.6
+  rx_notifier: ^1.1.0
   rxdart: ^0.27.5
-  sqflite: 
+  sqflite: null
 
 dev_dependencies:
   flutter_lints: ^2.0.0

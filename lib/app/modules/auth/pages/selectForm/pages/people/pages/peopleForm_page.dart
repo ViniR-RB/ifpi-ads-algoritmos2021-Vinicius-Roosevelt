@@ -15,7 +15,7 @@ class _FormPeoplePageState extends State<FormPeoplePage> {
 
   final TextEditingController _telefoneController = TextEditingController();
 
-  final TextEditingController _cnpjController = TextEditingController();
+  final TextEditingController _cpfController = TextEditingController();
 
   final TextEditingController _dtnascimentoController = TextEditingController();
 
@@ -36,40 +36,43 @@ class _FormPeoplePageState extends State<FormPeoplePage> {
   }
 
   _body(size) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _title('Finalize seu cadastro'),
-        Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              _field(size, _nameController, 'Nome'),
-              _field(size, _telefoneController, 'Telefone'),
-              _field(size, _cnpjController, 'CNPJ'),
-              _field(size, _sexoController, 'Sexo'),
-              _field(size, _cepController, 'Cep'),
-              _field(size, _estadoController, 'Estado'),
-              _field(size, _cidadeController, 'Cidade'),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buttonFinish(
-                size, () => Modular.to.navigate('/home/'), 'Finalizar'),
-            SizedBox(
-              width: 20,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(padding: EdgeInsets.all(24)),
+          _title('Finalize seu cadastro'),
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                _field(size, _nameController, 'Nome'),
+                _field(size, _telefoneController, 'Telefone'),
+                _field(size, _cpfController, 'CPF'),
+                _field(size, _sexoController, 'Sexo'),
+                _field(size, _cepController, 'Cep'),
+                _field(size, _estadoController, 'Estado'),
+                _field(size, _cidadeController, 'Cidade'),
+              ],
             ),
-            _buttonFinish(size, () => Modular.to.pop('/selectform'), 'Voltar')
-          ],
-        )
-      ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buttonFinish(size, () => Modular.to.navigate('/home/prestador'),
+                  'Finalizar'),
+              SizedBox(
+                width: 20,
+              ),
+              _buttonFinish(size, () => Modular.to.pop('/selectform'), 'Voltar')
+            ],
+          )
+        ],
+      ),
     );
   }
 

@@ -18,11 +18,11 @@ class DatabaseConnect {
   }
 
   FutureOr<void> _createDB(Database db, int version) async {
-    await db.execute(
-        'CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT,todoText TEXT,creationDate TEXT, isChecked INTEGER)');
+    await db
+        .execute('CREATE TABLE user(id TEXT,name TEXT,email TEXT,token TEXT)');
   }
 
-  Future<void> insertTodo(User user) async {
+  Future<void> insertUser(User user) async {
     final db = await database;
 
     await db.insert(
@@ -32,26 +32,33 @@ class DatabaseConnect {
     );
   }
 
-  Future<void> deleteToDo(User user) async {
+  Future<void> deleteToken(String userId) async {
     final db = await database;
 
-    await db.delete('User', where: 'id == ?', whereArgs: [user.id]);
+    await db.delete('user', where: 'id == ?', whereArgs: [userId]);
   }
 
-  Future<List<User>> getTodo() async {
+  Future<List<User>> getUser() async {
     final db = await database;
 
-    List<Map<String, dynamic>> items =
-        await db.query('User', orderBy: 'id DESC');
+    List<Map<String, dynamic>> items = await db.query('user');
 
     return List.generate(
       items.length,
       (i) => User(
-          id: items[i]['id'],
-          name: items[i]['name'],
-          email: items[i]['email'],
-          password: items[i]['password'],
-          token: items[i]['toekn']),
+        items[i]['id'],
+        items[i]['name'],
+        items[i]['token'],
+        items[i]['avatar'] ?? '',
+        email: items[i]['email'],
+        password: '',
+      ),
     );
+  }
+
+  updateToken({required String userId, required String userToken}) async {
+    final db = await database;
+    int items = await db.rawUpdate(
+        'UPDATE user SET token = ? WHERE id = $userId', ['$userToken']);
   }
 }

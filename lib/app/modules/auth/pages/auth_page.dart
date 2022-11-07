@@ -14,7 +14,7 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
-  bool isnew = true;
+  // bool isnew = true;
 
   final _formKey = GlobalKey<FormState>();
   final AuthController _controller = Modular.get();
@@ -48,20 +48,21 @@ class _AuthPageState extends State<AuthPage> {
           onPressed: () {},
         ),
       );
-      var exists = await _controller.login(
-          _emailcontroller.text, _passwordcontroller.text);
+      Map<String, dynamic> user = {
+        'email': _emailcontroller.text,
+        'password': _passwordcontroller.text
+      };
 
-      if (exists == false) {
+      var response = await _controller.login(user);
+
+      if (response == true) {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else {
-        _controller.login(_emailcontroller.text, _passwordcontroller.text);
-        isnew = true;
-        isnew
-            ? Modular.to.navigate('/auth/selectform')
-            : Modular.to.navigate('/home/');
       }
+      // isnew = false;
+      // isnew
+          // ? Modular.to.navigate('/home/')
+          // : Modular.to.navigate('/auth/selectform');
     }
-    //  Modular.to.navigate('/selectform');
   }
 
   String? validatepassword(String? value) {
@@ -97,47 +98,54 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
-  body(size) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          /* const Text(
-            'Recrutamento rápido e flexível',
-            style: TextStyle(
-              color: Color.fromRGBO(250, 244, 127, 1),
-            ),
+  body(Size size) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(top: 100, bottom: 50),
+        child: Container(
+          child: Column(
+            children: [
+              Column(
+                children: [
+                  /* const Text(
+                    'Recrutamento rápido e flexível',
+                    style: TextStyle(
+                      color: Color.fromRGBO(250, 244, 127, 1),
+                    ),
+                  ),
+                  const Text(
+                    'Aumento da rede de contatos',
+                    style: TextStyle(
+                      color: Color.fromRGBO(250, 244, 127, 1),
+                    ),
+                  ), */
+                  _title(),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 30),
+                        field(size, _validateEmail, _emailcontroller,
+                            'Email...', 'Email...', TextInputType.emailAddress),
+                        const SizedBox(height: 30.0),
+                        field(size, validatepassword, _passwordcontroller,
+                            'Senha....', 'Senha....', null),
+                      ],
+                    ),
+                  ),
+                  _forgotPassword(size),
+                  const SizedBox(height: 10),
+                  _entrar(size),
+                  const SizedBox(height: 10),
+                  AuthButton(
+                    label: 'Cadastrar-se',
+                    onpressed: () => Modular.to.pushNamed('/auth/sigIn/'),
+                  ),
+                ],
+              ),
+            ],
           ),
-          const Text(
-            'Aumento da rede de contatos',
-            style: TextStyle(
-              color: Color.fromRGBO(250, 244, 127, 1),
-            ),
-          ), */
-          _title(),
-          Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                const SizedBox(height: 30),
-                field(size, _validateEmail, _emailcontroller, 'Email...',
-                    'Email...', TextInputType.emailAddress),
-                const SizedBox(height: 30.0),
-                field(size, validatepassword, _passwordcontroller, 'Senha....',
-                    'Senha....', null),
-              ],
-            ),
-          ),
-          _forgotPassword(size),
-          const SizedBox(height: 10),
-          _entrar(size),
-          const SizedBox(height: 10),
-          AuthButton(
-            label: 'Cadastrar-se',
-            onpressed: () => Modular.to.pushNamed('/auth/sigIn'),
-          ),
-        ],
+        ),
       ),
     );
   }

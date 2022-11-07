@@ -50,7 +50,7 @@ class _SelectFormPageState extends State<SelectFormPage> {
                       IconButton(
                         iconSize: 100,
                         onPressed: () =>
-                            Modular.to.pushNamed('/auth/selectform/people'),
+                            Modular.to.pushNamed('/auth/selectform/people/'),
                         icon: Icon(Icons.people, color: Colors.black),
                       ),
                       Text(
@@ -61,29 +61,30 @@ class _SelectFormPageState extends State<SelectFormPage> {
                   ),
                 ),
                 Container(
-                    height: MediaQuery.of(context).size.height / 5,
-                    width: MediaQuery.of(context).size.width / 3,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                        shape: BoxShape.rectangle),
-                    child: Column(
-                      children: [
-                        IconButton(
-                          iconSize: 100,
-                          onPressed: () =>
-                              Modular.to.pushNamed('/auth/selectform/factory'),
-                          icon: Icon(
-                            Icons.factory,
-                            color: Colors.black,
-                          ),
+                  height: MediaQuery.of(context).size.height / 5,
+                  width: MediaQuery.of(context).size.width / 3,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      shape: BoxShape.rectangle),
+                  child: Column(
+                    children: [
+                      IconButton(
+                        iconSize: 100,
+                        onPressed: () =>
+                            Modular.to.pushNamed('/auth/selectform/factory/'),
+                        icon: Icon(
+                          Icons.factory,
+                          color: Colors.black,
                         ),
-                        Text(
-                          'Empresa',
-                          style: TextStyle(color: Colors.black),
-                        )
-                      ],
-                    )),
+                      ),
+                      Text(
+                        'Empresa',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           )
@@ -91,6 +92,7 @@ class _SelectFormPageState extends State<SelectFormPage> {
       ),
     );
   }
+
   field(
     size,
     String? Function(String?)? validator,

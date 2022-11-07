@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class FormFactoryPage extends StatefulWidget {
   const FormFactoryPage({Key? key}) : super(key: key);
@@ -13,6 +14,8 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
+
+  final TextEditingController _emailController = TextEditingController();
 
   final TextEditingController _telefoneController = TextEditingController();
 
@@ -30,9 +33,6 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Empresa'),
-      ),
       body: _body(),
     );
   }
@@ -43,25 +43,31 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(5),
           child: Center(
             child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height * 1,
               child: Column(
                 children: [
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.all(10),
                       child: Column(
                         children: [
+                          Padding(padding: EdgeInsets.only(top: 100)),
+                          Text(
+                            'Conte Nós Mais Sobre Sua Empresa',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Padding(padding: EdgeInsets.only(top: 20)),
                           Expanded(
                             child: Container(
-                              padding: const EdgeInsets.all(15),
-                              width: MediaQuery.of(context).size.width * 0.8,
+                              padding: const EdgeInsets.all(0),
+                              width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 color: Color.fromRGBO(54, 59, 107, 1),
                                 borderRadius: const BorderRadius.all(
-                                  Radius.circular(30),
+                                  Radius.circular(0),
                                 ),
                               ),
                               child: ListView(
@@ -73,10 +79,39 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
                                           MainAxisAlignment.start,
                                       children: [
                                         Form(
-                                            key: _formKey,
-                                            child: Column(
-                                              children: [_namefield()],
-                                            ))
+                                          key: _formKey,
+                                          child: Column(
+                                            children: [
+                                              _fields('Name Completo:', 'Nome',
+                                                  _nameController),
+                                              _fields('CNPJ:', 'CNPJ',
+                                                  _cnpjController),
+                                              _fields(
+                                                  'Celular (com DD):',
+                                                  '00 00000-0000',
+                                                  _telefoneController),
+                                              _fields('Cep:', '00000-000',
+                                                  _cnpjController),
+                                              _fields('Estado:', 'Piaui',
+                                                  _estadoController),
+                                              _fields('Cidade:', 'Teresina',
+                                                  _estadoController),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  button(
+                                                    'Confirmar',
+                                                    () => Modular.to
+                                                        .navigate('/home/empresa'),
+                                                  ),
+                                                  button('Voltar',
+                                                      () => Modular.to.pop()),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),
@@ -97,6 +132,26 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
     );
   }
 
+  button(String label, Function() onPressed) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 12, left: 16, bottom: 12),
+      child: TextButton(
+        style: TextButton.styleFrom(
+          textStyle: TextStyle(color: Color.fromRGBO(54, 59, 107, 1)),
+          side: BorderSide.none,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+          backgroundColor: Color.fromRGBO(249, 238, 47, 1),
+        ),
+        onPressed: onPressed,
+        child: Text(label),
+      ),
+    );
+  }
+
   field(
     size,
     String? Function(String?)? validator,
@@ -106,6 +161,7 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
     textInputType,
   ) {
     return Container(
+      color: Color.fromRGBO(48, 48, 48, 1),
       height: size.height / 14,
       width: size.width / 1.2,
       child: TextFormField(
@@ -113,32 +169,46 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
         controller: controller,
         keyboardType: textInputType,
         decoration: InputDecoration(
-          labelStyle: TextStyle(color: Colors.white),
+          labelStyle: const TextStyle(color: Colors.grey),
           label: Text(label),
           hintText: hintText,
-          hintStyle: TextStyle(color: Colors.grey),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+          hintStyle: const TextStyle(color: Colors.white),
+          border: const OutlineInputBorder(
+            borderSide:
+                BorderSide(color: Color.fromRGBO(48, 48, 48, 1), width: 1),
           ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(color: Colors.white, width: 1),
+          enabledBorder: const OutlineInputBorder(
+            borderSide:
+                BorderSide(color: Color.fromRGBO(48, 48, 48, 1), width: 1),
           ),
         ),
       ),
     );
   }
 
-  _namefield() {
+  _fields(String title, label, TextEditingController controller) {
     return Column(
       children: [
-        Text('Name'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(padding: EdgeInsets.only(left: 22.0, top: 12)),
+            Text(
+              '$title',
+              style: TextStyle(
+                fontFamily: 'MavenPro',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const Padding(padding: EdgeInsets.only(top: 12.0, bottom: 0)),
         field(
           MediaQuery.of(context).size,
           (p0) => null,
-          _nameController,
-          'Name',
-          'Name',
+          controller,
+          '$label',
+          '$label',
           TextInputType.name,
         ),
       ],
