@@ -13,14 +13,6 @@ class _HomePageState extends State<HomeEmpresaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-        ),
-      ]),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(249, 238, 47, 1),
         leading: Image.asset(
@@ -48,22 +40,13 @@ class _HomePageState extends State<HomeEmpresaPage> {
         children: [
           Container(
             margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
-            child: Text(
-              'Lista de Estabelecimentos',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            child: const Text(
+              'Lista de Funcionários Disponíveis',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           Column(
             children: [
-              Cardlist(),
-              Cardlist(),
-              Cardlist(),
-              Cardlist(),
-              Cardlist(),
-              Cardlist(),
-              Cardlist(),
-              Cardlist(),
-              Cardlist(),
               Cardlist(),
             ],
           ),

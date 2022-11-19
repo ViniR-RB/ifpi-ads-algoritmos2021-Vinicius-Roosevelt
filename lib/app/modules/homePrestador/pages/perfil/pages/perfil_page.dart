@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rx_notifier/rx_notifier.dart';
+
+import '../../../../../core/db/db.dart';
+import '../../../../../core/models/user.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -8,6 +12,20 @@ class PerfilPage extends StatefulWidget {
 }
 
 class _PerfilPageState extends State<PerfilPage> {
+  final TextEditingController _statusController = TextEditingController();
+  late DatabaseConnect db;
+  late RxNotifier<User> user = RxNotifier<User>(User(
+      '0', 'name', 'token', 'avatar',
+      password: 'password', email: 'email'));
+
+  @override
+  void initState() {
+    db = DatabaseConnect();
+    db.getUser().then((value) => {user.value = value[0]});
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,35 +51,37 @@ class _PerfilPageState extends State<PerfilPage> {
   }
 
   _body() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SizedBox(
-          height: 14,
-        ),
-        const CircleAvatar(
-          maxRadius: 80,
-          backgroundImage: NetworkImage(
-              'https://img.freepik.com/free-icon/important-person_318-10744.jpg?t=st=1645538552~exp=1645539152~hmac=268f4df1741112ca3b8735a233c8d50b8c76ebe5b0aa4d7bf90f1a359824ed8d&w=996'),
-        ),
-        const SizedBox(
-          height: 52,
-        ),
-        _nome(),
-        const SizedBox(
-          height: 22,
-        ),
-        _status(),
-        const SizedBox(
-          height: 22,
-        ),
-        _solicatacoes()
-      ],
-    );
+    return RxBuilder(builder: (_) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: 14,
+          ),
+          const CircleAvatar(
+            maxRadius: 80,
+            backgroundImage: NetworkImage(
+                'https://img.freepik.com/free-icon/important-person_318-10744.jpg?t=st=1645538552~exp=1645539152~hmac=268f4df1741112ca3b8735a233c8d50b8c76ebe5b0aa4d7bf90f1a359824ed8d&w=996'),
+          ),
+          const SizedBox(
+            height: 52,
+          ),
+          _nome(user.value.username),
+          const SizedBox(
+            height: 22,
+          ),
+          _statusDropDown(),
+          const SizedBox(
+            height: 22,
+          ),
+          _solicatacoes()
+        ],
+      );
+    });
   }
 
-  _nome() {
+  _nome(String nome) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Row(
@@ -76,13 +96,13 @@ class _PerfilPageState extends State<PerfilPage> {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
+            children: [
+              const Text(
                 'Nome',
                 style: TextStyle(fontFamily: 'MavenPro', color: Colors.grey),
               ),
               Text(
-                'Pedro Belarmino',
+                nome,
                 style: TextStyle(
                     fontFamily: 'MavenPro', fontWeight: FontWeight.bold),
               ),
@@ -103,38 +123,52 @@ class _PerfilPageState extends State<PerfilPage> {
 
   _status() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: Icon(
-              size: 32,
-              Icons.people,
-              color: Colors.white,
-            ),
+          _statusDropDown(),
+        ],
+      ),
+    );
+  }
+
+  _statusDropDown() {
+    return Padding(
+      padding: EdgeInsets.only(right: 20),
+      child: Row(
+        children: [
+          Icon(
+            size: 32,
+            Icons.people,
+            color: Colors.white,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                'Status',
-                style: TextStyle(fontFamily: 'MavenPro', color: Colors.grey),
+          Container(
+            width: MediaQuery.of(context).size.width / 2,
+            child: DropdownButtonFormField(
+              iconSize: 32,
+              hint: Text(
+                _statusController.text,
+                style: TextStyle(color: Theme.of(context).primaryColor),
               ),
-              Text(
-                'Disponivel',
-                style: TextStyle(
-                    fontFamily: 'MavenPro', fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          const Padding(
-            padding: const EdgeInsets.only(left: 100.0),
-            child: Icon(
-              Icons.keyboard_arrow_right,
-              size: 30,
-              color: Color.fromRGBO(82, 163, 208, 1),
+              items: ['Disponivel', 'Indisponível'].map((String status) {
+                return DropdownMenuItem<String>(
+                  value: status,
+                  child: Text(
+                    status,
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                );
+              }).toList(),
+              decoration: const InputDecoration(labelText: 'Status'),
+              onChanged: (status) {
+                String _strStatus = status.toString();
+                _statusController.text = _strStatus[0];
+              },
+              onSaved: (status) {
+                String _strSexo = status.toString();
+                _statusController.text = _strSexo[0];
+                print(_statusController.text);
+              },
             ),
           ),
         ],

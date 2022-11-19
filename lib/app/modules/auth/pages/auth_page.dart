@@ -60,8 +60,8 @@ class _AuthPageState extends State<AuthPage> {
       }
       // isnew = false;
       // isnew
-          // ? Modular.to.navigate('/home/')
-          // : Modular.to.navigate('/auth/selectform');
+      // ? Modular.to.navigate('/home/')
+      // : Modular.to.navigate('/auth/selectform');
     }
   }
 
@@ -139,7 +139,7 @@ class _AuthPageState extends State<AuthPage> {
                   const SizedBox(height: 10),
                   AuthButton(
                     label: 'Cadastrar-se',
-                    onpressed: () => Modular.to.pushNamed('/auth/sigIn/'),
+                    onpressed: () => Modular.to.pushNamed('/auth/selectform/'),
                   ),
                 ],
               ),

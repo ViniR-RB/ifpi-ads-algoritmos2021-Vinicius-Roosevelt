@@ -26,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
       var duration = Future.delayed(
           const Duration(seconds: 5),
           () => {
-                Modular.to.navigate('/home/prestador/'),
+                Modular.to.navigate('/home/empresa/'),
               });
     }
   }

@@ -14,7 +14,7 @@ class SelectFormModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ChildRoute(Modular.initialRoute, child: (_, args) => SelectFormPage()),
-    ModuleRoute('/empresa', module: FormFactoryModule()),
+    ModuleRoute('/empresa', module: FactoryFormModule()),
     ModuleRoute('/prestador', module: FormPeopleModule()),
   ];
 }

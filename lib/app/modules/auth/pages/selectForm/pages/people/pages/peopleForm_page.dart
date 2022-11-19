@@ -1,3 +1,4 @@
+import 'package:app/app/modules/auth/pages/selectForm/pages/people/peopleForm_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -11,13 +12,21 @@ class FormPeoplePage extends StatefulWidget {
 class _FormPeoplePageState extends State<FormPeoplePage> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _firstnameController = TextEditingController();
+
+  final TextEditingController _lastnameController = TextEditingController();
+
+  final TextEditingController _usenameController = TextEditingController();
+
+  final TextEditingController _descripitionController = TextEditingController();
+
+  final TextEditingController _emailController = TextEditingController();
 
   final TextEditingController _telefoneController = TextEditingController();
 
   final TextEditingController _cpfController = TextEditingController();
 
-  final TextEditingController _dtnascimentoController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   final TextEditingController _sexoController = TextEditingController();
 
@@ -26,6 +35,45 @@ class _FormPeoplePageState extends State<FormPeoplePage> {
   final TextEditingController _estadoController = TextEditingController();
 
   final TextEditingController _cidadeController = TextEditingController();
+
+  final PeopleFormController _controller = Modular.get();
+
+  void validatedForm() async {
+    if (_formKey.currentState!.validate()) {
+      final snackBar = SnackBar(
+        content: const Text('Email inválido, tente outro'),
+        action: SnackBarAction(
+          label: 'Continuar',
+          onPressed: () {},
+        ),
+      );
+      Map<String, dynamic> user = {
+        'username': _usenameController.value.text,
+        'first_name': _firstnameController.text,
+        'last_name': _lastnameController.text,
+        'password': _passwordController.value.text,
+        'phone_number': _telefoneController.value.text,
+        'email': _emailController.value.text,
+        'avatar':
+            'https://img.freepik.com/free-icon/important-person_318-10744.jpg?t=st=1645538552~exp=1645539152~hmac=268f4df1741112ca3b8735a233c8d50b8c76ebe5b0aa4d7bf90f1a359824ed8d&w=996',
+        'description': _descripitionController.value.text,
+        'zip_code': _cepController.value.text,
+        'state': _estadoController.value.text,
+        'cyte': _cidadeController.value.text,
+        'cpf': _cpfController.value.text,
+      };
+      try {
+        final dynamic response = await _controller.signInPeople(user);
+        // isnew = false;
+        // isnew
+        // ? Modular.to.navigate('/home/')
+        // : Modular.to.navigate('/auth/selectform');
+        Modular.to.navigate('/home/prestador');
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +95,17 @@ class _FormPeoplePageState extends State<FormPeoplePage> {
             key: _formKey,
             child: Column(
               children: [
-                _field(size, _nameController, 'Nome'),
+                _field(size, _usenameController, 'User Name'),
+                _field(size, _firstnameController, 'Primeiro Nome'),
+                _field(size, _lastnameController, 'Segundo Nome'),
+                _field(size, _emailController, 'Email'),
+                _field(size, _passwordController, 'Password'),
                 _field(size, _telefoneController, 'Telefone'),
                 _field(size, _cpfController, 'CPF'),
-                _field(size, _sexoController, 'Sexo'),
                 _field(size, _cepController, 'Cep'),
                 _field(size, _estadoController, 'Estado'),
                 _field(size, _cidadeController, 'Cidade'),
+                _field(size, _descripitionController, 'Descrição')
               ],
             ),
           ),
@@ -63,8 +115,7 @@ class _FormPeoplePageState extends State<FormPeoplePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buttonFinish(size, () => Modular.to.navigate('/home/prestador'),
-                  'Finalizar'),
+              _buttonFinish(size, () => validatedForm(), 'Finalizar'),
               SizedBox(
                 width: 20,
               ),

@@ -18,8 +18,8 @@ class DatabaseConnect {
   }
 
   FutureOr<void> _createDB(Database db, int version) async {
-    await db
-        .execute('CREATE TABLE user(id TEXT,name TEXT,email TEXT,token TEXT)');
+    await db.execute(
+        'CREATE TABLE user(id TEXT,username TEXT,email TEXT,webtoken TEXT)');
   }
 
   Future<void> insertUser(User user) async {
@@ -47,8 +47,8 @@ class DatabaseConnect {
       items.length,
       (i) => User(
         items[i]['id'],
-        items[i]['name'],
-        items[i]['token'],
+        items[i]['username'],
+        items[i]['webtoken'],
         items[i]['avatar'] ?? '',
         email: items[i]['email'],
         password: '',

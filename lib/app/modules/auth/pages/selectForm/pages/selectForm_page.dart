@@ -34,6 +34,14 @@ class _SelectFormPageState extends State<SelectFormPage> {
             ],
           ),
           Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Text(
+              'Selecione uma Opção',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+          ),
+          Padding(
             padding: const EdgeInsets.fromLTRB(0, 250, 0, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -48,14 +56,15 @@ class _SelectFormPageState extends State<SelectFormPage> {
                   child: Column(
                     children: [
                       IconButton(
-                        iconSize: 100,
+                        iconSize: 80,
                         onPressed: () =>
-                            Modular.to.pushNamed('/auth/selectform/people/'),
+                            Modular.to.pushNamed('/auth/selectform/prestador/'),
                         icon: Icon(Icons.people, color: Colors.black),
                       ),
                       Text(
-                        'Prestador de Serviço',
-                        style: TextStyle(color: Colors.black),
+                        'Prestador \nde Serviço',
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
@@ -70,9 +79,9 @@ class _SelectFormPageState extends State<SelectFormPage> {
                   child: Column(
                     children: [
                       IconButton(
-                        iconSize: 100,
+                        iconSize: 80,
                         onPressed: () =>
-                            Modular.to.pushNamed('/auth/selectform/factory/'),
+                            Modular.to.pushNamed('/auth/selectform/empresa/'),
                         icon: Icon(
                           Icons.factory,
                           color: Colors.black,
@@ -80,7 +89,8 @@ class _SelectFormPageState extends State<SelectFormPage> {
                       ),
                       Text(
                         'Empresa',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
                       )
                     ],
                   ),

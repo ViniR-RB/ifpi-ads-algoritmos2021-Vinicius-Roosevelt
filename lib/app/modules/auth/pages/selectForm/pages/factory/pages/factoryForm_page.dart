@@ -1,3 +1,5 @@
+import 'package:app/app/modules/auth/pages/selectForm/pages/factory/factoryForm_controller.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -13,7 +15,13 @@ class FormFactoryPage extends StatefulWidget {
 class _FormFactoryPageState extends State<FormFactoryPage> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _usenameController = TextEditingController();
+
+  final TextEditingController _firstnameController = TextEditingController();
+
+  final TextEditingController _lastnameController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
 
   final TextEditingController _emailController = TextEditingController();
 
@@ -21,15 +29,51 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
 
   final TextEditingController _cnpjController = TextEditingController();
 
-  final TextEditingController _dtnascimentoController = TextEditingController();
+  // final TextEditingController _dtnascimentoController = TextEditingController();
 
-  final TextEditingController _sexoController = TextEditingController();
+  // final TextEditingController _sexoController = TextEditingController();
 
   final TextEditingController _cepController = TextEditingController();
 
   final TextEditingController _estadoController = TextEditingController();
 
   final TextEditingController _cidadeController = TextEditingController();
+  final TextEditingController _descripitionController = TextEditingController();
+  final FactoryFormController _controller = Modular.get();
+  void validatedForm() async {
+    if (_formKey.currentState!.validate()) {
+      final snackBar = SnackBar(
+        content: const Text('Email inválido, tente outro'),
+        action: SnackBarAction(
+          label: 'Continuar',
+          onPressed: () {},
+        ),
+      );
+      Map<String, dynamic> user = {
+        'username': _usenameController.text,
+        'first_name': _firstnameController.text,
+        'last_name': _lastnameController.text,
+        'password': _passwordController.text,
+        'phone_number': _telefoneController.text,
+        'email': _emailController.text,
+        'avatar':
+            'https://img.freepik.com/free-icon/important-person_318-10744.jpg?t=st=1645538552~exp=1645539152~hmac=268f4df1741112ca3b8735a233c8d50b8c76ebe5b0aa4d7bf90f1a359824ed8d&w=996',
+        'description': _descripitionController.text,
+        'zip_code': _cepController.text,
+        'state': _estadoController.text,
+        'cyte': _cidadeController.text,
+        'cnpj': _cnpjController.text,
+      };
+      try {
+        final Response<dynamic> response =
+            await _controller.signInFactory(user);
+        Modular.to.navigate('/home/empresa');
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,10 +126,16 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
                                           key: _formKey,
                                           child: Column(
                                             children: [
-                                              _fields('Name Completo:', 'Nome',
-                                                  _nameController),
-                                              _fields('CNPJ:', 'CNPJ',
-                                                  _cnpjController),
+                                              _fields('User Name:', 'User Name',
+                                                  _usenameController),
+                                              _fields(
+                                                  'Primeiro Nome:',
+                                                  'Matheus',
+                                                  _firstnameController),
+                                              _fields(
+                                                  'Segundo Nome:',
+                                                  'Leonardo',
+                                                  _lastnameController),
                                               _fields(
                                                   'Celular (com DD):',
                                                   '00 00000-0000',
@@ -95,15 +145,22 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
                                               _fields('Estado:', 'Piaui',
                                                   _estadoController),
                                               _fields('Cidade:', 'Teresina',
-                                                  _estadoController),
+                                                  _cidadeController),
+                                              _fields(
+                                                  'CNPJ:',
+                                                  'XX.XXX.XXX/0001-XX',
+                                                  _cnpjController),
+                                              _fields(
+                                                  'Descrição:',
+                                                  'Focado, Determinando',
+                                                  _descripitionController),
                                               Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   button(
                                                     'Confirmar',
-                                                    () => Modular.to
-                                                        .navigate('/home/empresa'),
+                                                    () => validatedForm(),
                                                   ),
                                                   button('Voltar',
                                                       () => Modular.to.pop()),
