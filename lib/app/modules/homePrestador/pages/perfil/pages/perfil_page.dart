@@ -248,7 +248,7 @@ class _PerfilPageState extends State<PerfilPage> {
                   style: TextStyle(fontFamily: 'MavenPro', color: Colors.grey),
                 ),
                 Text(
-                  'Você tem 0 Solicitação',
+                  'Veja suas Solicitações',
                   style: TextStyle(
                       fontFamily: 'MavenPro', fontWeight: FontWeight.bold),
                 ),

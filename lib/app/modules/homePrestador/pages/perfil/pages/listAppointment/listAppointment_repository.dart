@@ -14,7 +14,7 @@ class ListAppointmentRepository {
       final user = await db.getUser();
       final String token = user[0].webtoken.toString();
       final String id = user[0].id;
-      final employeeid = {'employeeid': id};
+      final employeeid = {'employeeId': id};
       final Response<dynamic> response = await repository.post(
         '/auth/signin/employee/myappointments',
         data: jsonEncode(employeeid),

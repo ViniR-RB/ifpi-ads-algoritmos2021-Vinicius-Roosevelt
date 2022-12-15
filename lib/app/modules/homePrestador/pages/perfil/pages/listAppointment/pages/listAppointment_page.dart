@@ -39,26 +39,30 @@ class _ListAppointmentPageState extends State<ListAppointmentPage> {
   }
 
   _body() {
-    return appointmentList.value.isNotEmpty
-        ? Container(
-            padding: const EdgeInsets.all(8),
-            height: MediaQuery.of(context).size.height / 2,
-            child: ListView.builder(
-                itemCount: appointmentList.value.length,
-                itemBuilder: (context, index) {
-                  return Cardlist(
-                    avatar: appointmentList.value[index]['enterprise'][0]
-                        ['avatar'],
-                    username: appointmentList.value[index]['enterprise'][0]
-                        ['username'],
-                    onTap: () => Modular.to.pushNamed(
-                        '/home/prestador/perfil/listppointment/acceptappointment/',
-                        arguments: appointmentList.value[index]),
-                  );
-                }),
-          )
-        : const Center(
-            child: CircularProgressIndicator(),
-          );
+    return RxBuilder(
+      builder: (context) {
+        return Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              height: MediaQuery.of(context).size.height / 2,
+              child: ListView.builder(
+                  itemCount: appointmentList.value.length,
+                  itemBuilder: (context, index) {
+                    return Cardlist(
+                      avatar: appointmentList.value[index]['enterprise'][0]
+                          ['avatar'],
+                      username: appointmentList.value[index]['enterprise'][0]
+                          ['username'],
+                      onTap: () => Modular.to.pushNamed(
+                          '/home/prestador/perfil/listppointment/acceptappointment/',
+                          arguments: appointmentList.value[index]),
+                    );
+                  }),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
