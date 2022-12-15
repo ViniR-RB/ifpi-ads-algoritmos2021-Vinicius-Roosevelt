@@ -5,14 +5,14 @@ import 'package:rx_notifier/rx_notifier.dart';
 import '../../../../../core/db/db.dart';
 import '../../../../../core/models/user.dart';
 
-class PerfilPage extends StatefulWidget {
-  const PerfilPage({super.key});
+class PerfilEmpresaPage extends StatefulWidget {
+  const PerfilEmpresaPage({super.key});
 
   @override
-  State<PerfilPage> createState() => _PerfilPageState();
+  State<PerfilEmpresaPage> createState() => _PerfilEmpresaPageState();
 }
 
-class _PerfilPageState extends State<PerfilPage> {
+class _PerfilEmpresaPageState extends State<PerfilEmpresaPage> {
   final TextEditingController _statusController = TextEditingController();
   late DatabaseConnect db;
   late RxNotifier<User> user = RxNotifier<User>(
@@ -115,10 +115,6 @@ class _PerfilPageState extends State<PerfilPage> {
             height: 52,
           ),
           _nome(user.value.username, 'Nome'),
-          const SizedBox(
-            height: 22,
-          ),
-          _nome('Disponível', 'Status'),
           const SizedBox(
             height: 22,
           ),
@@ -225,45 +221,41 @@ class _PerfilPageState extends State<PerfilPage> {
   }
 
   _solicatacoes() {
-    return GestureDetector(
-      onTap: () =>
-          Modular.to.pushNamed('/home/prestador/perfil/listppointment/'),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 50),
-        child: Row(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Icon(
-                size: 32,
-                Icons.phone_outlined,
-                color: Colors.white,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      child: Row(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: Icon(
+              size: 32,
+              Icons.phone_outlined,
+              color: Colors.white,
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              Text(
+                'Solicitações',
+                style: TextStyle(fontFamily: 'MavenPro', color: Colors.grey),
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Solicitações',
-                  style: TextStyle(fontFamily: 'MavenPro', color: Colors.grey),
-                ),
-                Text(
-                  'Você tem 0 Solicitação',
-                  style: TextStyle(
-                      fontFamily: 'MavenPro', fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 12.0),
-              child: Icon(
-                Icons.keyboard_arrow_right,
-                size: 30,
-                color: Color.fromRGBO(82, 163, 208, 1),
+              Text(
+                'Veja Suas Solicitações',
+                style: TextStyle(
+                    fontFamily: 'MavenPro', fontWeight: FontWeight.bold),
               ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: Icon(
+              Icons.keyboard_arrow_right,
+              size: 30,
+              color: Color.fromRGBO(82, 163, 208, 1),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

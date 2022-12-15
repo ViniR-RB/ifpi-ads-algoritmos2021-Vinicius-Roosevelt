@@ -1,7 +1,7 @@
-import 'package:app/app/modules/auth/pages/selectForm/pages/factory/factortForm_module.dart';
-import 'package:app/app/modules/auth/pages/selectForm/pages/factory/pages/factoryForm_page.dart';
-import 'package:app/app/modules/auth/pages/selectForm/pages/people/pages/peopleForm_page.dart';
-import 'package:app/app/modules/auth/pages/selectForm/pages/people/peopleForm_module.dart';
+import 'package:app/app/modules/auth/pages/selectForm/pages/enterprise/enterprise_module.dart';
+import 'package:app/app/modules/auth/pages/selectForm/pages/enterprise/pages/enterprise_page.dart';
+import 'package:app/app/modules/auth/pages/selectForm/pages/employer/pages/peopleForm_page.dart';
+import 'package:app/app/modules/auth/pages/selectForm/pages/employer/peopleForm_module.dart';
 
 import 'package:app/app/modules/auth/pages/selectForm/pages/selectForm_page.dart';
 
@@ -14,7 +14,7 @@ class SelectFormModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ChildRoute(Modular.initialRoute, child: (_, args) => SelectFormPage()),
-    ModuleRoute('/empresa', module: FactoryFormModule()),
+    ModuleRoute('/empresa', module: EnterpriseModule()),
     ModuleRoute('/prestador', module: FormPeopleModule()),
   ];
 }

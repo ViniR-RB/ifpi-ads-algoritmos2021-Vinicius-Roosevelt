@@ -1,24 +1,9 @@
-import 'dart:convert';
+import 'package:app/app/core/models/user.dart';
 
-class User {
-  final String id;
-  final String username;
-  final String password;
-  final String email;
-  final String webtoken;
-  final String avatar;
-  final String type;
-
-  User(
-    this.id,
-    this.username,
-    this.webtoken,
-    this.avatar,
-    this.type, {
-    required this.password,
-    required this.email,
-  });
-
+class Employer extends User {
+  Employer(super.id, super.username, super.webtoken, super.avatar, super.type,
+      {required super.password, required super.email});
+  @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -29,8 +14,8 @@ class User {
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
+  factory Employer.fromMap(Map<String, dynamic> map) {
+    return Employer(
       map['employee']['id'] ?? '',
       map['employee']['username'] ?? '',
       map['webtoken'] ?? '',
@@ -41,6 +26,4 @@ class User {
       password: map['employee']['password'] ?? '',
     );
   }
-
-  String toJson() => json.encode(toMap());
 }

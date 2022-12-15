@@ -1,4 +1,4 @@
-import 'package:app/app/modules/auth/pages/selectForm/pages/people/peopleForm_controller.dart';
+import 'package:app/app/modules/auth/pages/selectForm/pages/employer/peopleForm_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -68,8 +68,10 @@ class _FormPeoplePageState extends State<FormPeoplePage> {
         // isnew
         // ? Modular.to.navigate('/home/')
         // : Modular.to.navigate('/auth/selectform');
+
         Modular.to.navigate('/home/prestador');
       } catch (e) {
+        print(e);
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     }

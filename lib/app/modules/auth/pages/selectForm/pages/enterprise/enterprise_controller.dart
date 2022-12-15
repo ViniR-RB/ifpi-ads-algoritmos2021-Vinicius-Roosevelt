@@ -1,22 +1,23 @@
-import 'package:app/app/modules/auth/pages/selectForm/pages/people/peopleForm_repository.dart';
+import 'package:app/app/core/models/enterprise.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../../../core/db/db.dart';
 import '../../../../../../core/models/user.dart';
+import 'enterprise_repository.dart';
 
-class PeopleFormController {
-  final PeopleFormRepository repository;
+class EnterpriseController {
+  final EnterpriseRepository repository;
 
-  PeopleFormController({required this.repository});
+  EnterpriseController({required this.repository});
 
-  signInPeople(Map<String, dynamic> user) async {
+  signInFactory(Map<String, dynamic> user) async {
     try {
-      final Response<dynamic> response = await repository.signInPeople(user);
+      final Response<dynamic> response = await repository.signInFactory(user);
       final DatabaseConnect db = DatabaseConnect();
       final Map<String, dynamic> userData = response.data;
-      final User users = User.fromMap(userData);
+      final User users = Enterprise.fromMap(userData);
       final List<User> userList = await db.getUser();
-      print(users.id);
+
       if (userList.isEmpty) {
         await db.insertUser(users);
       } else {
@@ -30,6 +31,7 @@ class PeopleFormController {
       }
       return response;
     } catch (e) {
+      print(e);
       throw Exception(e);
     }
   }

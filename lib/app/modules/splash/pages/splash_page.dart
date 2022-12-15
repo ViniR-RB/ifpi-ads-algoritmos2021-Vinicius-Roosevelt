@@ -18,16 +18,21 @@ class _SplashPageState extends State<SplashPage> {
     final List<User> userList = await db.getUser();
     if (userList.isEmpty) {
       final Future<Set<void>> duration = Future.delayed(
-          const Duration(seconds: 5),
+          const Duration(seconds: 2),
           () => {
                 Modular.to.navigate('/auth/'),
               });
+    } else if (userList[0].type == 'employee') {
+      var duration = Future.delayed(
+          const Duration(seconds: 2),
+          () => {
+                Modular.to.navigate('/home/prestador/'),
+              });
     } else {
       var duration = Future.delayed(
-          const Duration(seconds: 5),
-          () => {
-                Modular.to.navigate('/home/empresa/'),
-              });
+        const Duration(seconds: 2),
+        () => Modular.to.navigate('/home/empresa/'),
+      );
     }
   }
 

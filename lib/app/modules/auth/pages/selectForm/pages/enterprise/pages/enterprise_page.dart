@@ -1,18 +1,18 @@
-import 'package:app/app/modules/auth/pages/selectForm/pages/factory/factoryForm_controller.dart';
+import 'package:app/app/modules/auth/pages/selectForm/pages/enterprise/enterprise_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class FormFactoryPage extends StatefulWidget {
-  const FormFactoryPage({Key? key}) : super(key: key);
+class EnterprisePage extends StatefulWidget {
+  const EnterprisePage({Key? key}) : super(key: key);
 
   @override
-  State<FormFactoryPage> createState() => _FormFactoryPageState();
+  State<EnterprisePage> createState() => _FormFactoryPageState();
 }
 
-class _FormFactoryPageState extends State<FormFactoryPage> {
+class _FormFactoryPageState extends State<EnterprisePage> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _usenameController = TextEditingController();
@@ -39,7 +39,7 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
 
   final TextEditingController _cidadeController = TextEditingController();
   final TextEditingController _descripitionController = TextEditingController();
-  final FactoryFormController _controller = Modular.get();
+  final EnterpriseController _controller = Modular.get();
   void validatedForm() async {
     if (_formKey.currentState!.validate()) {
       final snackBar = SnackBar(
@@ -52,7 +52,7 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
       Map<String, dynamic> user = {
         'username': _usenameController.text,
         'first_name': _firstnameController.text,
-        'last_name': _lastnameController.text,
+        // 'last_name': _lastnameController.text,
         'password': _passwordController.text,
         'phone_number': _telefoneController.text,
         'email': _emailController.text,
@@ -132,16 +132,18 @@ class _FormFactoryPageState extends State<FormFactoryPage> {
                                                   'Primeiro Nome:',
                                                   'Matheus',
                                                   _firstnameController),
-                                              _fields(
-                                                  'Segundo Nome:',
-                                                  'Leonardo',
-                                                  _lastnameController),
+                                              // _fields('Segundo Nome:', 'Levi',
+                                              //     _lastnameController),
+                                              _fields('Email', 'a@a.com.br',
+                                                  _emailController),
+                                              _fields('Senha', '@dsahu3214',
+                                                  _passwordController),
                                               _fields(
                                                   'Celular (com DD):',
                                                   '00 00000-0000',
                                                   _telefoneController),
                                               _fields('Cep:', '00000-000',
-                                                  _cnpjController),
+                                                  _cepController),
                                               _fields('Estado:', 'Piaui',
                                                   _estadoController),
                                               _fields('Cidade:', 'Teresina',

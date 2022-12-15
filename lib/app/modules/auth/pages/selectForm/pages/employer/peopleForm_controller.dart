@@ -1,20 +1,22 @@
+import 'package:app/app/core/models/employer.dart';
+import 'package:app/app/modules/auth/pages/selectForm/pages/employer/peopleForm_repository.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../../../core/db/db.dart';
 import '../../../../../../core/models/user.dart';
-import 'factoryForm_repository.dart';
 
-class FactoryFormController {
-  final FactoryFormRepository repository;
+class PeopleFormController {
+  final PeopleFormRepository repository;
 
-  FactoryFormController({required this.repository});
+  PeopleFormController({required this.repository});
 
-  signInFactory(Map<String, dynamic> user) async {
+  signInPeople(Map<String, dynamic> user) async {
     try {
-      final Response<dynamic> response = await repository.signInFactory(user);
+      final Response<dynamic> response = await repository.signInPeople(user);
       final DatabaseConnect db = DatabaseConnect();
       final Map<String, dynamic> userData = response.data;
-      final User users = User.fromMap(userData);
+      final User users = Employer.fromMap(userData);
+      print(users.type);
       final List<User> userList = await db.getUser();
 
       if (userList.isEmpty) {

@@ -42,7 +42,7 @@ class _AuthPageState extends State<AuthPage> {
   void validatedForm() async {
     if (_formKey.currentState!.validate()) {
       final snackBar = SnackBar(
-        content: const Text('Usuario ou Senha Incorretos'),
+        content: const Text('Ocorreu Algum Erro'),
         action: SnackBarAction(
           label: 'Continuar',
           onPressed: () {},
@@ -53,15 +53,17 @@ class _AuthPageState extends State<AuthPage> {
         'password': _passwordcontroller.text
       };
 
-      var response = await _controller.login(user);
-
-      if (response == true) {
+      try {
+        var response = await _controller.login(user);
+        if (response == true) {
+          Modular.to.navigate('/home/prestador');
+        } else {
+          Modular.to.navigate('/home/empresa/');
+        }
+      } catch (e) {
+        print(e);
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
-      // isnew = false;
-      // isnew
-      // ? Modular.to.navigate('/home/')
-      // : Modular.to.navigate('/auth/selectform');
     }
   }
 

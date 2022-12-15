@@ -19,12 +19,12 @@ class DatabaseConnect {
 
   FutureOr<void> _createDB(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE user(id TEXT,username TEXT,email TEXT,webtoken TEXT)');
+        'CREATE TABLE user(id TEXT,username TEXT,email TEXT,webtoken TEXT,type TEXT)');
   }
 
   Future<void> insertUser(User user) async {
     final db = await database;
-
+   
     await db.insert(
       'user',
       user.toMap(),
@@ -42,7 +42,7 @@ class DatabaseConnect {
     final db = await database;
 
     List<Map<String, dynamic>> items = await db.query('user');
-
+   
     return List.generate(
       items.length,
       (i) => User(
@@ -50,6 +50,7 @@ class DatabaseConnect {
         items[i]['username'],
         items[i]['webtoken'],
         items[i]['avatar'] ?? '',
+        items[i]['type'] ?? '',
         email: items[i]['email'],
         password: '',
       ),
